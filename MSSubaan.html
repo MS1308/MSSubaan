@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M S Subaan - Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.8;
+        color: #e0f7fa;
+        background: #0a1128;
+        min-height: 100vh;
+        overflow-x: hidden;
+        font-size: 1.1rem;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px;
+        position: relative;
+        z-index: 10;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(10, 17, 40, 0.9);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #00d4ff;
+        z-index: 50;
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+      }
+
+      .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .nav-logo {
+        font-weight: 700;
+        font-size: 1.8rem;
+        color: #00d4ff;
+        text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #e0f7fa;
+        font-size: 1.1rem;
+        transition: color 0.3s, text-shadow 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #d81de8;
+        text-shadow: 0 0 8px rgba(216, 29, 232, 0.5);
+      }
+
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: #1e293b;
+        z-index: 40;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(to right, #00d4ff, #d81de8);
+        width: 0;
+        transition: width 0.15s;
+      }
+
+      section {
+        padding: 60px 20px;
+        position: relative;
+      }
+
+      .hero {
+        background: #0a1128;
+        text-align: center;
+        padding-top: 100px;
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .hero canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 5;
+        opacity: 0.6;
+      }
+
+      .hero .avatar {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 40px;
+        z-index: 10;
+        overflow: hidden;
+        border: 2px solid transparent;
+        background: linear-gradient(to right, #00d4ff, #d81de8) border-box;
+        box-shadow: 0 0 30px rgba(0, 212, 255, 0.4), 0 0 20px rgba(216, 29, 232, 0.3);
+        backdrop-filter: blur(4px);
+      }
+
+      .hero .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.9;
+      }
+
+      .hero h1 {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 5.5rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #00d4ff, #d81de8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        text-shadow: 0 0 15px rgba(0, 212, 255, 0.7), 0 0 25px rgba(216, 29, 232, 0.5), 2px 2px 5px rgba(0, 0, 0, 0.5);
+        position: relative;
+        z-index: 10;
+        animation: glowPulse 2s ease-in-out infinite, letterSpacing 3s ease-in-out infinite;
+        transition: transform 0.3s;
+      }
+
+      .hero h1:hover {
+        transform: scale(1.05);
+        text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 30px rgba(216, 29, 232, 0.8), 3px 3px 6px rgba(0, 0, 0, 0.6);
+      }
+
+      @keyframes glowPulse {
+        0% { text-shadow: 0 0 15px rgba(0, 212, 255, 0.7), 0 0 25px rgba(216, 29, 232, 0.5), 2px 2px 5px rgba(0, 0, 0, 0.5); }
+        50% { text-shadow: 0 0 25px rgba(0, 212, 255, 1), 0 0 35px rgba(216, 29, 232, 0.8), 3px 3px 6px rgba(0, 0, 0, 0.6); }
+        100% { text-shadow: 0 0 15px rgba(0, 212, 255, 0.7), 0 0 25px rgba(216, 29, 232, 0.5), 2px 2px 5px rgba(0, 0, 0, 0.5); }
+      }
+
+      @keyframes letterSpacing {
+        0% { letter-spacing: 0.05em; }
+        50% { letter-spacing: 0.1em; }
+        100% { letter-spacing: 0.05em; }
+      }
+
+      .hero p {
+        font-size: 1.5rem;
+        color: #b0bec5;
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 10;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 10;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #b0bec5;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s, text-shadow 0.3s;
+      }
+
+      .contact-item:hover {
+        color: #00d4ff;
+        text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 10;
+      }
+
+      .button {
+        padding: 15px 30px;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .button-primary {
+        background: #00d4ff;
+        color: #0a1128;
+        border: none;
+        box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+      }
+
+      .button-primary:hover {
+        background: #00b8d4;
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.7);
+      }
+
+      .button-secondary {
+        border: 1px solid #d81de8;
+        color: #d81de8;
+        box-shadow: 0 0 10px rgba(216, 29, 232, 0.3);
+      }
+
+      .button-secondary:hover {
+        background: #d81de8;
+        color: #0a1128;
+        box-shadow: 0 0 15px rgba(216, 29, 232, 0.5);
+      }
+
+      .card {
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid #00d4ff;
+        border-radius: 14px;
+        padding: 40px;
+        box-shadow: 0 0 25px rgba(0, 212, 255, 0.3);
+        transition: all 0.3s;
+        position: relative;
+        z-index: 10;
+      }
+
+      .card:hover {
+        box-shadow: 0 0 35px rgba(0, 212, 255, 0.5);
+      }
+
+      .section-title {
+        font-size: 2.75rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 40px;
+        color: #00d4ff;
+        text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+      }
+
+      .summary {
+        background: #0a1128;
+        text-align: center;
+        position: relative;
+      }
+
+      .summary canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 5;
+        opacity: 0.6;
+      }
+
+      .summary-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        position: relative;
+        padding: 40px;
+        z-index: 10;
+      }
+
+      .summary p {
+        font-size: 1.5rem;
+        color: #b0bec5;
+        line-height: 1.8;
+        background: rgba(30, 41, 59, 0.7);
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 0 25px rgba(0, 212, 255, 0.3);
+      }
+
+      .experience, .projects, .education {
+        background: #0a1128;
+        position: relative;
+      }
+
+      .experience canvas, .projects canvas, .education canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 5;
+        opacity: 0.5;
+      }
+
+      .experience .card, .projects .card, .education .card {
+        max-width: 1000px;
+        margin: 0 auto 30px;
+      }
+
+      .experience .job-header {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+
+      .experience .job-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #00d4ff;
+        text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      }
+
+      .experience .company {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #e0f7fa;
+      }
+
+      .experience .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        color: #b0bec5;
+        font-size: 1rem;
+      }
+
+      .experience .meta span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .experience .meta span:last-child {
+        background: rgba(0, 212, 255, 0.2);
+        color: #00d4ff;
+        padding: 6px 10px;
+        border-radius: 4px;
+      }
+
+      .experience .achievements div {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 15px;
+        color: #b0bec5;
+        font-size: 1.1rem;
+      }
+
+      .skills {
+        background: #0a1128;
+        position: relative;
+      }
+
+      .skills .skills-list {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        position: relative;
+        z-index: 10;
+      }
+
+      .skills .skill-item {
+        background: rgba(30, 41, 59, 0.8);
+        padding: 10px 20px;
+        border-radius: 18px;
+        font-size: 1rem;
+        color: #e0f7fa;
+        border: 1px solid #00d4ff;
+        transition: all 0.3s;
+      }
+
+      .skills .skill-item:hover {
+        background: #00d4ff;
+        color: #0a1128;
+        box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+      }
+
+      .projects .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 30px;
+        max-width: 1300px;
+        margin: 0 auto;
+      }
+
+      .projects .category {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #0a1128;
+        background: #00d4ff;
+        padding: 6px 15px;
+        border-radius: 18px;
+        display: inline-block;
+        margin-bottom: 20px;
+      }
+
+      .projects .project-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #e0f7fa;
+        text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      }
+
+      .projects .project-title:hover {
+        color: #d81de8;
+        text-shadow: 0 0 8px rgba(216, 29, 232, 0.5);
+      }
+
+      .projects .description {
+        color: #b0bec5;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+      }
+
+      .projects .highlights h4 {
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #e0f7fa;
+        font-size: 1.2rem;
+      }
+
+      .projects .highlights li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        color: #b0bec5;
+      }
+
+      .projects .technologies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .projects .technologies span {
+        font-size: 0.9rem;
+        background: rgba(30, 41, 59, 0.8);
+        color: #e0f7fa;
+        padding: 6px 10px;
+        border-radius: 4px;
+        border: 1px solid #00d4ff;
+      }
+
+      .education .card {
+        margin-bottom: 20px;
+      }
+
+      .education .item {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .education .icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(to bottom right, #00d4ff, #d81de8);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        z-index: 10;
+      }
+
+      .education .degree {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #e0f7fa;
+        text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      }
+
+      .education .field {
+        font-size: 1.5rem;
+        color: #00d4ff;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      .education .university, .education .cert-provider {
+        color: #b0bec5;
+        margin-bottom: 6px;
+        font-size: 1.1rem;
+      }
+
+      .education .duration {
+        font-size: 1rem;
+        color: #78909c;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .contact-feedback {
+        background: #0a1128;
+        position: relative;
+      }
+
+      .contact-feedback canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 5;
+        opacity: 0.6;
+      }
+
+      .contact-feedback .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 30px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .contact-feedback .card {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .contact-feedback .card-content {
+        position: relative;
+        z-index: 10;
+        padding: 20px;
+      }
+
+      .contact-feedback .card h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #e0f7fa;
+        text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      }
+
+      .contact-feedback .card p {
+        color: #b0bec5;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+      }
+
+      .contact-feedback .button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        padding: 20px;
+      }
+
+      .modal-content {
+        background: rgba(30, 41, 59, 0.9);
+        border: 1px solid #00d4ff;
+        border-radius: 14px;
+        padding: 40px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 0 35px rgba(0, 212, 255, 0.5);
+      }
+
+      .modal-content h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #e0f7fa;
+        text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      }
+
+      .modal-content input, .modal-content textarea {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #00d4ff;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        background: rgba(10, 17, 40, 0.8);
+        color: #e0f7fa;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      .modal-content input:focus, .modal-content textarea:focus {
+        border-color: #d81de8;
+        box-shadow: 0 0 10px rgba(216, 29, 232, 0.5);
+        outline: none;
+      }
+
+      .modal-content textarea {
+        resize: none;
+        height: 120px;
+      }
+
+      .modal-content .rating {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .modal-content .star {
+        cursor: pointer;
+        color: #78909c;
+        transition: color 0.3s;
+        font-size: 1.5rem;
+      }
+
+      .modal-content .star.filled {
+        color: #d81de8;
+        text-shadow: 0 0 8px rgba(216, 29, 232, 0.5);
+      }
+
+      .modal-content .buttons {
+        display: flex;
+        gap: 20px;
+      }
+
+      footer {
+        padding: 30px 20px;
+        border-top: 1px solid #00d4ff;
+        text-align: center;
+        color: #b0bec5;
+        background: #0a1128;
+        box-shadow: 0 -2px 10px rgba(0, 212, 255, 0.3);
+        font-size: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .hero h1 {
+          font-size: 4.5rem;
+        }
+
+        .hero p {
+          font-size: 1.2rem;
+        }
+
+        .contact-info {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .section-title {
+          font-size: 2.25rem;
+        }
+
+        .projects .grid, .contact-feedback .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .experience .job-header {
+          flex-direction: column;
+        }
+
+        .education .item {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero .avatar {
+          width: 180px;
+          height: 180px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-content">
+        <div class="nav-logo">M S SUBAAN</div>
+        <div class="nav-links">
+          <a href="#experience">Experience</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#education">Education</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <section id="hero" class="hero">
+      <canvas id="heroCanvas"></canvas>
+      <div class="container">
+        <div class="avatar">
+          <img src="F:\resume\MSsubaan.jpg" alt="M S Subaan Profile Photo">
+        </div>
+        <h1>M S SUBAAN</h1>
+        <p>AI & Machine Learning Specialist | Full Stack Developer | B.Tech Graduate</p>
+        <div class="contact-info">
+          <a href="mailto:mssubaan@gmail.com" class="contact-item">📧 mssubaan@gmail.com</a>
+          <a href="tel:+919544337075" class="contact-item">📱 +91-9544337075</a>
+          <a href="https://linkedin.com/in/mssubaan" class="contact-item" target="_blank">💼 LinkedIn</a>
+          <a href="https://github.com/MS1308" class="contact-item" target="_blank">🔗 GitHub</a>
+        </div>
+        <div class="buttons">
+          <a href="F:\resume\M S Subaan.pdf" class="button button-primary" download>Download Resume</a>
+          <button class="button button-secondary" onclick="openContactModal()">Get in Touch</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="summary" class="summary">
+      <canvas id="summaryCanvas"></canvas>
+      <div class="container">
+        <h2 class="section-title">Professional Summary</h2>
+        <div class="summary-content">
+          <p>
+            B.Tech graduate with specialized expertise in artificial intelligence, machine learning, and full-stack development. 
+            Currently serving as a Graduate Apprentice at C-DAC, Thiruvananthapuram, where I develop scalable, data-driven solutions 
+            for intelligent transport systems and smart city initiatives. Proven track record in real-time data processing, 
+            traffic simulation systems, and urban-scale analytics. Passionate about leveraging cutting-edge technology to solve 
+            complex real-world challenges while maintaining code quality and system reliability.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="experience">
+      <canvas id="experienceCanvas"></canvas>
+      <div class="container">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="card">
+          <div class="job-header">
+            <div class="job-title">Graduate Apprentice</div>
+            <div class="company">Centre for Development of Advanced Computing (C-DAC)</div>
+            <div class="meta">
+              <span>📍 Thiruvananthapuram, India</span>
+              <span>📅 Aug 2024 - Present</span>
+              <span>Full-time</span>
+            </div>
+          </div>
+          <div class="achievements">
+            <div>➔ Developed real-time traffic dashboard monitoring 100+ live data points with integrated anomaly detection</div>
+            <div>➔ Built comprehensive traffic planning application enabling real-time signal adjustments</div>
+            <div>➔ Implemented advanced ML models reducing traffic wait times by 18% and improving prediction accuracy by 25%</div>
+            <div>➔ Designed scalable architecture using Django, Prometheus, and Grafana for enterprise-level deployment</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="job-header">
+            <div class="job-title">Robotics Instructor</div>
+            <div class="company">Techosa</div>
+            <div class="meta">
+              <span>📍 Kerala, India</span>
+              <span>📅 May 2024 – Aug 2024</span>
+              <span>Contract</span>
+            </div>
+          </div>
+          <div class="achievements">
+            <div>➔ Conducted robotics workshops for 100+ students across multiple educational institutions</div>
+            <div>➔ Developed comprehensive STEM curriculum improving student problem-solving scores by 30%</div>
+            <div>➔ Specialized in Arduino programming, Python automation, and sensor integration technologies</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="container">
+        <h2 class="section-title">Technical Expertise</h2>
+        <div class="skills-list">
+          <div class="skill-item">Python</div>
+          <div class="skill-item">JavaScript</div>
+          <div class="skill-item">SQL</div>
+          <div class="skill-item">Deep Learning</div>
+          <div class="skill-item">TensorFlow</div>
+          <div class="skill-item">Data Analysis</div>
+          <div class="skill-item">Neural Networks</div>
+          <div class="skill-item">Django</div>
+          <div class="skill-item">Full Stack Development</div>
+          <div class="skill-item">WebSocket Communication</div>
+          <div class="skill-item">Grafana</div>
+          <div class="skill-item">Prometheus</div>
+          <div class="skill-item">Alert Manager</div>
+          <div class="skill-item">PostgreSQL</div>
+          <div class="skill-item">Data Visualization</div>
+          <div class="skill-item">SUMO Traffic Simulator</div>
+          <div class="skill-item">D3.js</div>
+          <div class="skill-item">Pandas</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <canvas id="projectsCanvas"></canvas>
+      <div class="container">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="grid">
+          <div class="card">
+            <span class="category">AI & Urban Planning</span>
+            <h3 class="project-title">Intelligent Traffic Management System</h3>
+            <p class="description">Django-based web application integrated with SUMO traffic simulator for comprehensive traffic analysis and planning.</p>
+            <div class="highlights">
+              <h4>Key Highlights:</h4>
+              <ul>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Real-time traffic simulation and scenario modeling</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Advanced report generation with statistical analysis</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Predictive traffic planning using ML algorithms</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Interactive dashboards for traffic flow optimization</li>
+              </ul>
+            </div>
+            <div class="technologies">
+              <span>Django</span><span>SUMO</span><span>Machine Learning</span><span>Data Visualization</span>
+            </div>
+          </div>
+          <div class="card">
+            <span class="category">Data Engineering</span>
+            <h3 class="project-title">Real-Time Traffic Analytics Platform</h3>
+            <p class="description">Enterprise-grade platform for live traffic data visualization and monitoring with automated alerting.</p>
+            <div class="highlights">
+              <h4>Key Highlights:</h4>
+              <ul>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Real-time data processing from multiple traffic APIs</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Dynamic dashboard creation and customization</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Automated anomaly detection and alert system</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Scalable architecture supporting high-volume data streams</li>
+              </ul>
+            </div>
+            <div class="technologies">
+              <span>Django</span><span>Grafana</span><span>Prometheus</span><span>REST APIs</span>
+            </div>
+          </div>
+          <div class="card">
+            <span class="category">Data Science</span>
+            <h3 class="project-title">Advanced Data Visualization Suite</h3>
+            <p class="description">Python-based tool for converting complex datasets into meaningful visualizations and insights.</p>
+            <div class="highlights">
+              <h4>Key Highlights:</h4>
+              <ul>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Support for multiple chart types and statistical representations</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Automated pattern recognition and trend analysis</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Optimized performance for large-scale datasets</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>User-friendly interface for non-technical stakeholders</li>
+              </ul>
+            </div>
+            <div class="technologies">
+              <span>Python</span><span>Pandas</span><span>Matplotlib</span><span>Data Analytics</span>
+            </div>
+          </div>
+          <div class="card">
+            <span class="category">Environmental AI</span>
+            <h3 class="project-title">Flood Forecasting Using ML</h3>
+            <p class="description">Machine learning pipeline for flood risk prediction using meteorological data.</p>
+            <div class="highlights">
+              <h4>Key Highlights:</h4>
+              <ul>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Achieved 80% accuracy in flood risk prediction</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Integrated multiple data sources for comprehensive analysis</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Scalable model architecture for different geographical regions</li>
+                <li><div style="width: 8px; height: 8px; background: #00d4ff; border-radius: 50%; margin-top: 5px;"></div>Actionable insights for urban planning and disaster preparedness</li>
+              </ul>
+            </div>
+            <div class="technologies">
+              <span>TensorFlow</span><span>Python</span><span>Neural Networks</span><span>ML</span>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <section id="education" class="education">
+      <canvas id="educationCanvas"></canvas>
+      <div class="container">
+        <h2 class="section-title">Education & Certifications</h2>
+        <div class="card">
+          <div class="item">
+            <div class="icon">🎓</div>
+            <div>
+              <h3 class="degree">Bachelor of Technology</h3>
+              <div class="field">Computer Science and Engineering</div>
+              <div class="university">APJ Abdul Kalam Technological University</div>
+              <div class="duration">📅 Aug 2019 – Aug 2023</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="item">
+            <div class="icon">🏆</div>
+            <div>
+              <h3 class="degree">Cyber Security Awareness for Employees</h3>
+              <div class="cert-provider">C-DAC Accelerated Knowledge Enhancement Series (CAKES)</div>
+              <div class="duration">📅 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-feedback">
+      <canvas id="contactCanvas"></canvas>
+      <div class="container">
+        <div class="grid">
+          <div class="card">
+            <div class="card-content">
+              <h3>📧 Let's Connect</h3>
+              <p>Interested in collaboration or have questions about my work? I'd love to hear from you.</p>
+              <button class="button button-primary" onclick="openContactModal()">Send Message</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <h3>⭐ Share Feedback</h3>
+              <p>Your thoughts and suggestions help me improve. Share your feedback about my portfolio.</p>
+              <button class="button button-primary" onclick="openFeedbackModal()">Give Feedback</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>M S Subaan.</p>
+      </div>
+    </footer>
+
+    <div id="contactModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h3>Get in Touch</h3>
+        <input type="text" id="contactName" placeholder="Your Name" required>
+        <input type="email" id="contactEmail" placeholder="Your Email" required>
+        <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+        <div class="buttons">
+          <button class="button button-primary" onclick="submitContact()">Send Message</button>
+          <button class="button button-secondary" onclick="closeContactModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="feedbackModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h3>Share Your Feedback</h3>
+        <div class="rating">
+          <span class="star" data-value="1">★</span>
+          <span class="star" data-value="2">★</span>
+          <span class="star" data-value="3">★</span>
+          <span class="star" data-value="4">★</span>
+          <span class="star filled" data-value="5">★</span>
+        </div>
+        <textarea id="feedbackComment" placeholder="Your feedback..." required></textarea>
+        <div class="buttons">
+          <button class="button button-primary" onclick="submitFeedback()">Submit Feedback</button>
+          <button class="button button-secondary" onclick="closeFeedbackModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Scroll progress
+      window.addEventListener('scroll', () => {
+        const progressFill = document.getElementById('progressFill');
+        const scrollPercent = Math.min((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100, 100);
+        progressFill.style.width = scrollPercent + '%';
+      });
+
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.querySelector(anchor.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // Contact modal
+      function openContactModal() {
+        document.getElementById('contactModal').style.display = 'flex';
+      }
+
+      function closeContactModal() {
+        document.getElementById('contactModal').style.display = 'none';
+        document.getElementById('contactName').value = '';
+        document.getElementById('contactEmail').value = '';
+        document.getElementById('contactMessage').value = '';
+      }
+
+      function submitContact() {
+        const name = document.getElementById('contactName').value;
+        const email = document.getElementById('contactEmail').value;
+        const message = document.getElementById('contactMessage').value;
+        if (name && email && message) {
+          alert('Thank you for your message! I will get back to you soon.');
+          closeContactModal();
+        } else {
+          alert('Please fill out all fields.');
+        }
+      }
+
+      // Feedback modal
+      let rating = 5;
+      function openFeedbackModal() {
+        document.getElementById('feedbackModal').style.display = 'flex';
+        updateStars();
+      }
+
+      function closeFeedbackModal() {
+        document.getElementById('feedbackModal').style.display = 'none';
+        document.getElementById('feedbackComment').value = '';
+        rating = 5;
+        updateStars();
+      }
+
+      function updateStars() {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach(star => {
+          star.classList.toggle('filled', parseInt(star.dataset.value) <= rating);
+        });
+      }
+
+      document.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', () => {
+          rating = parseInt(star.dataset.value);
+          updateStars();
+        });
+      });
+
+      function submitFeedback() {
+        const comment = document.getElementById('feedbackComment').value;
+        if (comment) {
+          alert('Thank you for your feedback!');
+          closeFeedbackModal();
+        } else {
+          alert('Please provide a comment.');
+        }
+      }
+
+      // WebGL for Hero Section (Interactive Neural Network)
+      function initHeroCanvas() {
+        const canvas = document.getElementById('heroCanvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+        // Particle-based neural network
+        const particles = [];
+        const lines = [];
+        const particleCount = 100;
+        const maxDistance = 6;
+
+        // Create particles (nodes)
+        const particleGeometry = new THREE.SphereGeometry(0.06, 16, 16);
+        const particleMaterial = new THREE.MeshBasicMaterial({ color: 0x00d4ff });
+        for (let i = 0; i < particleCount; i++) {
+          const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+          particle.position.set(
+            (Math.random() - 0.5) * 24,
+            (Math.random() - 0.5) * 24,
+            (Math.random() - 0.5) * 24
+          );
+          scene.add(particle);
+          particles.push(particle);
+        }
+
+        // Create connections (edges)
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00d4ff, opacity: 0.3, transparent: true });
+        for (let i = 0; i < particleCount; i++) {
+          for (let j = i + 1; j < particleCount; j++) {
+            const distance = particles[i].position.distanceTo(particles[j].position);
+            if (distance < maxDistance) {
+              const geometry = new THREE.BufferGeometry().setFromPoints([
+                particles[i].position,
+                particles[j].position
+              ]);
+              const line = new THREE.Line(geometry, lineMaterial);
+              scene.add(line);
+              lines.push(line);
+            }
+          }
+        }
+
+        camera.position.z = 18;
+
+        // Mouse interaction
+        let mouseX = 0, mouseY = 0;
+        canvas.addEventListener('mousemove', (event) => {
+          mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+          mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        function animate() {
+          requestAnimationFrame(animate);
+          particles.forEach((particle, i) => {
+            particle.position.y += Math.sin(Date.now() * 0.001 + i) * 0.03;
+            particle.position.x += Math.cos(Date.now() * 0.001 + i) * 0.015;
+          });
+
+          // Update line positions
+          let lineIndex = 0;
+          for (let i = 0; i < particleCount; i++) {
+            for (let j = i + 1; j < particleCount; j++) {
+              const distance = particles[i].position.distanceTo(particles[j].position);
+              if (distance < maxDistance && lines[lineIndex]) {
+                lines[lineIndex].geometry.setFromPoints([
+                  particles[i].position,
+                  particles[j].position
+                ]);
+                lineIndex++;
+              }
+            }
+          }
+
+          // Camera rotation based on mouse
+          camera.position.x += (mouseX * 6 - camera.position.x) * 0.05;
+          camera.position.y += (-mouseY * 6 - camera.position.y) * 0.05;
+          camera.lookAt(0, 0, 0);
+
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        });
+      }
+
+      // WebGL for Summary Section (Wireframe Spheres)
+      function initSummaryCanvas() {
+        const canvas = document.getElementById('summaryCanvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+        const geometry = new THREE.SphereGeometry(0.6, 16, 16);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true });
+        const spheres = [];
+
+        for (let i = 0; i < 10; i++) {
+          const sphere = new THREE.Mesh(geometry, material);
+          sphere.position.set(
+            (Math.random() - 0.5) * 12,
+            (Math.random() - 0.5) * 12,
+            (Math.random() - 0.5) * 12
+          );
+          scene.add(sphere);
+          spheres.push(sphere);
+        }
+
+        camera.position.z = 6;
+
+        function animate() {
+          requestAnimationFrame(animate);
+          spheres.forEach(sphere => {
+            sphere.rotation.x += 0.01;
+            sphere.rotation.y += 0.01;
+            sphere.position.y += Math.sin(Date.now() * 0.001 + sphere.position.x) * 0.015;
+          });
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        });
+      }
+
+      // WebGL for Experience Section (Wireframe Tetrahedrons)
+      function initExperienceCanvas() {
+        const canvas = document.getElementById('experienceCanvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+        const geometry = new THREE.TetrahedronGeometry(0.5);
+        const material = new THREE.MeshBasicMaterial({ color: 0xd81de8, wireframe: true });
+        const tetrahedrons = [];
+
+        for (let i = 0; i < 10; i++) {
+          const tetrahedron = new THREE.Mesh(geometry, material);
+          tetrahedron.position.set(
+            (Math.random() - 0.5) * 24,
+            (Math.random() - 0.5) * 24,
+            (Math.random() - 0.5) * 24
+          );
+          scene.add(tetrahedron);
+          tetrahedrons.push(tetrahedron);
+        }
+
+        camera.position.z = 12;
+
+        function animate() {
+          requestAnimationFrame(animate);
+          tetrahedrons.forEach(tetra => {
+            tetra.rotation.x += 0.015;
+            tetra.rotation.y += 0.015;
+            tetra.position.y += Math.sin(Date.now() * 0.001 + tetra.position.x) * 0.015;
+          });
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        });
+      }
+
+      // WebGL for Projects Section (Wireframe Icosahedrons)
+      function initProjectsCanvas() {
+        const canvas = document.getElementById('projectsCanvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+        const geometry = new THREE.IcosahedronGeometry(0.5);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true });
+        const icosahedrons = [];
+
+        for (let i = 0; i < 10; i++) {
+          const icosahedron = new THREE.Mesh(geometry, material);
+          icosahedron.position.set(
+            (Math.random() - 0.5) * 36,
+            (Math.random() - 0.5) * 36,
+            (Math.random() - 0.5) * 36
+          );
+          scene.add(icosahedron);
+          icosahedrons.push(icosahedron);
+        }
+
+        camera.position.z = 18;
+
+        function animate() {
+          requestAnimationFrame(animate);
+          icosahedrons.forEach(ico => {
+            ico.rotation.x += 0.015;
+            ico.rotation.y += 0.015;
+            ico.position.y += Math.sin(Date.now() * 0.001 + ico.position.x) * 0.015;
+          });
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        });
+      }
+
+      // WebGL for Education Section (Wireframe Octahedrons)
+      function initEducationCanvas() {
+        const canvas = document.getElementById('educationCanvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+        const geometry = new THREE.OctahedronGeometry(0.5);
+        const material = new THREE.MeshBasicMaterial({ color: 0xd81de8, wireframe: true });
+        const octahedrons = [];
+
+        for (let i = 0; i < 10; i++) {
+          const octahedron = new THREE.Mesh(geometry, material);
+          octahedron.position.set(
+            (Math.random() - 0.5) * 18,
+            (Math.random() - 0.5) * 18,
+            (Math.random() - 0.5) * 18
+          );
+          scene.add(octahedron);
+          octahedrons.push(octahedron);
+        }
+
+        camera.position.z = 10;
+
+        function animate() {
+          requestAnimationFrame(animate);
+          octahedrons.forEach(octa => {
+            octa.rotation.x += 0.01;
+            octa.rotation.y += 0.01;
+            octa.position.y += Math.sin(Date.now() * 0.001 + octa.position.x) * 0.015;
+          });
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        });
+      }
+
+      // WebGL for Contact Section (Wireframe Torus)
+      function initContactCanvas() {
+        const canvas = document.getElementById('contactCanvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+        const geometry = new THREE.TorusGeometry(1, 0.25, 16, 100);
+        const material = new THREE.MeshBasicMaterial({ color: 0xd81de8, wireframe: true });
+        const torus = new THREE.Mesh(geometry, material);
+        scene.add(torus);
+
+        camera.position.z = 4;
+
+        function animate() {
+          requestAnimationFrame(animate);
+          torus.rotation.x += 0.01;
+          torus.rotation.y += 0.01;
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        });
+      }
+
+      // Initialize animations
+      window.onload = () => {
+        initHeroCanvas();
+        initSummaryCanvas();
+        initExperienceCanvas();
+        initProjectsCanvas();
+        initEducationCanvas();
+        initContactCanvas();
+      };
+    </script>
+  </body>
+</html>
